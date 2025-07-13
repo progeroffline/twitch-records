@@ -24,7 +24,7 @@ body {
   }
 }
 
-.container {
+.video-player-container {
   max-width: 800px;
   width: 100%;
   background: #242f3d;
@@ -36,7 +36,7 @@ body {
 }
 
 @media (max-width: 768px) {
-  .container {
+  .video-player-container {
     height: 90vh;
     border-radius: 12px;
     max-width: 95%;
@@ -44,7 +44,7 @@ body {
   }
 }
 
-.header {
+.channel-header {
   background: #2b5278;
   padding: 16px 20px;
   display: flex;
@@ -52,7 +52,7 @@ body {
   gap: 12px;
 }
 
-.avatar {
+.channel-avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -64,18 +64,37 @@ body {
   font-size: 16px;
 }
 
-.channel-info h3 {
+.channel-details h3 {
   font-size: 15px;
   font-weight: 600;
   margin-bottom: 2px;
 }
 
-.channel-info p {
+.channel-details p {
   font-size: 13px;
   opacity: 0.7;
 }
 
-.video-wrapper {
+.video-metadata {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.video-title {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 6px;
+  color: #ffffff;
+}
+
+.video-date {
+  font-size: 13px;
+  color: #8aa8c8;
+  font-weight: 400;
+}
+
+.video-container {
   position: relative;
   width: 100%;
   background: #000;
@@ -84,7 +103,7 @@ body {
 }
 
 @media (max-width: 768px) {
-  .video-wrapper {
+  .video-container {
     flex: 1;
     display: flex;
     align-items: center;
@@ -100,7 +119,7 @@ body {
 }
 
 .video-js .vjs-big-play-button {
-  background: rgba(43, 82, 120, 0.8);
+  background: rgba(43, 82, 120, 0.9);
   border: none;
   border-radius: 50%;
   width: 80px;
@@ -111,34 +130,112 @@ body {
   top: 50%;
   transform: translate(-50%, -50%);
   transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(43, 82, 120, 0.4);
 }
 
 .video-js .vjs-big-play-button:hover {
   background: rgba(43, 82, 120, 1);
   transform: translate(-50%, -50%) scale(1.1);
+  box-shadow: 0 6px 20px rgba(43, 82, 120, 0.6);
 }
 
 .video-js .vjs-control-bar {
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(36, 47, 61, 0.9);
+  backdrop-filter: blur(10px);
   height: 40px;
+  border-radius: 8px 8px 0 0;
 }
 
-.video-js .vjs-play-control,
-.video-js .vjs-volume-control,
+.video-js .vjs-play-control {
+  color: #ffffff;
+}
+
+.video-js .vjs-play-control:hover {
+  color: #2b5278;
+}
+
+.video-js .vjs-volume-control {
+  color: #ffffff;
+}
+
+.video-js .vjs-volume-control:hover {
+  color: #2b5278;
+}
+
 .video-js .vjs-fullscreen-control {
   color: #ffffff;
 }
 
+.video-js .vjs-fullscreen-control:hover {
+  color: #2b5278;
+}
+
+.video-js .vjs-current-time,
+.video-js .vjs-duration {
+  color: #8aa8c8;
+  font-size: 12px;
+}
+
 .video-js .vjs-progress-control .vjs-progress-holder {
-  height: 4px;
-  background: rgba(255, 255, 255, 0.3);
+  height: 6px;
+  background: rgba(138, 168, 200, 0.3);
+  border-radius: 3px;
 }
 
 .video-js .vjs-progress-control .vjs-play-progress {
   background: #2b5278;
+  border-radius: 3px;
 }
 
-.support-banner {
+.video-js .vjs-progress-control .vjs-load-progress {
+  background: rgba(43, 82, 120, 0.3);
+  border-radius: 3px;
+}
+
+.video-js .vjs-progress-control .vjs-play-progress:before {
+  color: #ffffff;
+  font-size: 12px;
+  top: -6px;
+}
+
+.video-js .vjs-volume-panel .vjs-volume-control {
+  background: rgba(36, 47, 61, 0.9);
+  border-radius: 4px;
+}
+
+.video-js .vjs-volume-bar {
+  background: rgba(138, 168, 200, 0.3);
+  border-radius: 2px;
+}
+
+.video-js .vjs-volume-level {
+  background: #2b5278;
+  border-radius: 2px;
+}
+
+.video-js .vjs-menu-button-popup .vjs-menu {
+  background: rgba(36, 47, 61, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  border: 1px solid rgba(138, 168, 200, 0.2);
+}
+
+.video-js .vjs-menu li {
+  color: #ffffff;
+  padding: 8px 12px;
+}
+
+.video-js .vjs-menu li:hover {
+  background: rgba(43, 82, 120, 0.3);
+  color: #ffffff;
+}
+
+.video-js .vjs-menu li.vjs-selected {
+  background: rgba(43, 82, 120, 0.5);
+  color: #ffffff;
+}
+
+.donation-banner {
   background: linear-gradient(135deg, #2b5278 0%, #4a6741 100%);
   padding: 16px 20px;
   display: flex;
@@ -148,13 +245,13 @@ body {
   gap: 12px;
 }
 
-.support-info {
+.donation-info {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.support-icon {
+.donation-icon {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -165,18 +262,18 @@ body {
   font-size: 18px;
 }
 
-.support-text h4 {
+.donation-text h4 {
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 2px;
 }
 
-.support-text p {
+.donation-text p {
   font-size: 12px;
   opacity: 0.8;
 }
 
-.support-button {
+.donation-button {
   background: #ffffff;
   color: #2b5278;
   border: none;
@@ -190,7 +287,7 @@ body {
   display: inline-block;
 }
 
-.support-button:hover {
+.donation-button:hover {
   background: #f0f0f0;
   transform: translateY(-1px);
 }
@@ -200,25 +297,25 @@ body {
     padding: 10px;
   }
 
-  .container {
+  .video-player-container {
     border-radius: 8px;
   }
 
-  .header {
+  .channel-header {
     padding: 12px 16px;
   }
 
-  .avatar {
+  .channel-avatar {
     width: 36px;
     height: 36px;
     font-size: 14px;
   }
 
-  .channel-info h3 {
+  .channel-details h3 {
     font-size: 14px;
   }
 
-  .channel-info p {
+  .channel-details p {
     font-size: 12px;
   }
 
@@ -229,29 +326,29 @@ body {
     font-size: 24px;
   }
 
-  .support-banner {
+  .donation-banner {
     padding: 12px 16px;
     flex-direction: column;
     text-align: center;
   }
 
-  .support-info {
+  .donation-info {
     flex-direction: column;
     text-align: center;
   }
 
-  .support-button {
+  .donation-button {
     width: 100%;
     max-width: 200px;
   }
 }
 
 @media (max-width: 480px) {
-  .header {
+  .channel-header {
     padding: 10px 12px;
   }
 
-  .support-banner {
+  .donation-banner {
     padding: 10px 12px;
   }
 

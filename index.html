@@ -5,21 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Video Player</title>
     <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
-    <link href="./styles.css" rel="stylesheet" />
+    <link href="styles.css" rel="stylesheet" />
   </head>
   <body>
-    <div class="container">
-      <div class="header">
-        <div class="avatar">V</div>
-        <div class="channel-info">
-          <h3>Video Channel</h3>
-          <p>Live Stream</p>
+    <div class="video-player-container">
+      <div class="channel-header">
+        <div class="channel-avatar">V</div>
+        <div class="channel-details">
+          <h3>Відео канал</h3>
+          <p>Прямий ефір</p>
         </div>
       </div>
 
-      <div class="video-wrapper">
+      <div class="video-metadata">
+        <h2 class="video-title">Назва відео</h2>
+        <p class="video-date">14 липня 2025</p>
+      </div>
+
+      <div class="video-container">
         <video
-          id="my-video"
+          id="video-player"
           class="video-js"
           controls
           preload="auto"
@@ -30,23 +35,23 @@
             src="https://f005.backblazeb2.com/file/twitchrecords/leb1ga/12-07-2025-14-00/480/master.m3u8"
             type="application/x-mpegURL"
           />
-          Your browser does not support the video tag.
+          Ваш браузер не підтримує відео тег.
         </video>
       </div>
 
-      <div class="support-banner">
-        <div class="support-info">
-          <div class="support-icon">💝</div>
-          <div class="support-text">
-            <h4>Поддержать автора</h4>
-            <p>Помогите развитию канала</p>
+      <div class="donation-banner">
+        <div class="donation-info">
+          <div class="donation-icon">💝</div>
+          <div class="donation-text">
+            <h4>Підтримати автора</h4>
+            <p>Допоможіть розвитку каналу</p>
           </div>
         </div>
-        <a href="#" class="support-button">Поддержать</a>
+        <a href="#" class="donation-button">Підтримати</a>
       </div>
     </div>
 
     <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
-    <script src="./script.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
