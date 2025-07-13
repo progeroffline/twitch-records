@@ -16,37 +16,39 @@
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         background: #17212b;
         color: #ffffff;
-        min-height: 90vh;
+        min-height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
         padding: 20px;
       }
 
       @media (max-width: 768px) {
         body {
-          padding: 0;
-          height: 90vh;
+          padding: 5vh 0;
+          height: 100vh;
           overflow: hidden;
         }
       }
 
       .container {
-        max-width: 90vh;
+        max-width: 800px;
         width: 100%;
         background: #242f3d;
         border-radius: 12px;
         overflow: hidden;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-direction: column;
       }
 
       @media (max-width: 768px) {
         .container {
           height: 90vh;
-          border-radius: 0;
-          max-width: none;
-          display: flex;
-          flex-direction: column;
+          border-radius: 12px;
+          max-width: 95%;
+          margin: 0 auto;
         }
       }
 
@@ -85,6 +87,8 @@
         position: relative;
         width: 100%;
         background: #000;
+        aspect-ratio: 16/9;
+        overflow: hidden;
       }
 
       @media (max-width: 768px) {
@@ -93,19 +97,14 @@
           display: flex;
           align-items: center;
           justify-content: center;
+          aspect-ratio: unset;
         }
       }
 
       .video-js {
         width: 100% !important;
-        height: auto !important;
-      }
-
-      @media (max-width: 768px) {
-        .video-js {
-          width: 100% !important;
-          height: 100% !important;
-        }
+        height: 100% !important;
+        object-fit: cover;
       }
 
       .video-js .vjs-big-play-button {
@@ -318,24 +317,29 @@
 
     <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
     <script>
+      // Функция для получения параметра из URL
       function getUrlParameter(name) {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get(name);
       }
 
+      // Функция для построения полного URL к видео
       function buildVideoUrl(filePath) {
         const baseUrl = 'https://f005.backblazeb2.com/file/twitchrecords/';
         return baseUrl + filePath;
       }
 
+      // Получаем путь к файлу из параметра URL
       const videoPath = getUrlParameter('video');
 
+      // Инициализация плеера
       const player = videojs('my-video', {
         responsive: true,
         fluid: true,
         aspectRatio: '16:9',
       });
 
+      // Если путь к видео указан в параметрах, загружаем его
       if (videoPath) {
         const fullVideoUrl = buildVideoUrl(videoPath);
         player.src({
@@ -343,6 +347,7 @@
           type: 'application/x-mpegURL',
         });
 
+        // Обновляем информацию о канале на основе пути к файлу
         const channelName = videoPath.split('/')[0] || 'Video Channel';
         document.querySelector('.channel-info h3').textContent = channelName;
         document.querySelector('.avatar').textContent = channelName
@@ -350,13 +355,10 @@
           .toUpperCase();
       }
 
+      // Auto-resize video for mobile
       function resizeVideo() {
-        const container = document.querySelector('.video-wrapper');
-        const video = document.querySelector('#my-video');
-
-        if (window.innerWidth > 768) {
-          container.style.height = window.innerWidth * 0.5625 + 'px';
-        }
+        // Для десктопа размер определяется CSS aspect-ratio
+        // Для мобильных устройств размер адаптируется автоматически через flex
       }
 
       window.addEventListener('resize', resizeVideo);
