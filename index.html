@@ -23,6 +23,14 @@
         padding: 20px;
       }
 
+      @media (max-width: 768px) {
+        body {
+          padding: 0;
+          height: 100vh;
+          overflow: hidden;
+        }
+      }
+
       .container {
         max-width: 800px;
         width: 100%;
@@ -30,6 +38,16 @@
         border-radius: 12px;
         overflow: hidden;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          height: 100vh;
+          border-radius: 0;
+          max-width: none;
+          display: flex;
+          flex-direction: column;
+        }
       }
 
       .header {
@@ -69,9 +87,25 @@
         background: #000;
       }
 
+      @media (max-width: 768px) {
+        .video-wrapper {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+
       .video-js {
         width: 100% !important;
         height: auto !important;
+      }
+
+      @media (max-width: 768px) {
+        .video-js {
+          width: 100% !important;
+          height: 100% !important;
+        }
       }
 
       .video-js .vjs-big-play-button {
@@ -284,18 +318,43 @@
 
     <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
     <script>
+      function getUrlParameter(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+      }
+
+      function buildVideoUrl(filePath) {
+        const baseUrl = 'https://f005.backblazeb2.com/file/twitchrecords/';
+        return baseUrl + filePath;
+      }
+
+      const videoPath = getUrlParameter('video');
+
       const player = videojs('my-video', {
         responsive: true,
         fluid: true,
         aspectRatio: '16:9',
       });
 
-      // Auto-resize video for mobile
+      if (videoPath) {
+        const fullVideoUrl = buildVideoUrl(videoPath);
+        player.src({
+          src: fullVideoUrl,
+          type: 'application/x-mpegURL',
+        });
+
+        const channelName = videoPath.split('/')[0] || 'Video Channel';
+        document.querySelector('.channel-info h3').textContent = channelName;
+        document.querySelector('.avatar').textContent = channelName
+          .charAt(0)
+          .toUpperCase();
+      }
+
       function resizeVideo() {
         const container = document.querySelector('.video-wrapper');
         const video = document.querySelector('#my-video');
 
-        if (window.innerWidth <= 768) {
+        if (window.innerWidth > 768) {
           container.style.height = window.innerWidth * 0.5625 + 'px';
         }
       }
