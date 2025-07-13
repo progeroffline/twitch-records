@@ -1,19 +1,28 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <link rel="icon" href="./icons/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./icons/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png" />
+    <link rel="manifest" href="./site.webmanifest" />
+
+    <meta name="theme-color" content="#ffffff" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Video Player</title>
+
     <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
-    <link href="styles.css" rel="stylesheet" />
+    <link href="./styles.css" rel="stylesheet" />
+
+    <title>Video Player</title>
   </head>
   <body>
     <div class="video-player-container">
       <div class="channel-header">
         <div class="channel-avatar">V</div>
         <div class="channel-details">
-          <h3>Відео канал</h3>
-          <p>Прямий ефір</p>
+          <h3>Лебидло Aрхів Стрімов</h3>
+          <p>Записи з усіх стрімів Михайла Лебіги від 05.09.2023</p>
         </div>
       </div>
 
@@ -31,10 +40,7 @@
           playsinline
           data-setup="{}"
         >
-          <source
-            src="https://f005.backblazeb2.com/file/twitchrecords/leb1ga/12-07-2025-14-00/480/master.m3u8"
-            type="application/x-mpegURL"
-          />
+          <source src="" type="application/x-mpegURL" />
           Ваш браузер не підтримує відео тег.
         </video>
       </div>
@@ -47,11 +53,13 @@
             <p>Допоможіть розвитку каналу</p>
           </div>
         </div>
-        <a href="#" class="donation-button">Підтримати</a>
+        <a href="https://send.monobank.ua/jar/7CsHYUnPeN" class="donation-button"
+          >Підтримати</a
+        >
       </div>
     </div>
 
     <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
-    <script src="script.js"></script>
+    <script src="./script.js"></script>
   </body>
 </html>
