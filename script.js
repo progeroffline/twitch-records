@@ -46,7 +46,8 @@ function extractVideoInfo(videoPath) {
 
 function buildVideoUrl(filePath, quality) {
   const baseUrl = 'https://cdn.twitchrecords.space/file/twitchrecords/';
-  return baseUrl + filePath + `/${quality}/master.m3u8`;
+  const urlWithQuality = baseUrl + filePath + `/${quality}/master.m3u8`;
+  return urlWithQuality;
 }
 
 const videoPath = getUrlParameter('video');
