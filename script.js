@@ -44,9 +44,9 @@ function extractVideoInfo(videoPath) {
   return { formattedDate };
 }
 
-function buildVideoUrl(filePath) {
+function buildVideoUrl(filePath, quality) {
   const baseUrl = 'https://cdn.twitchrecords.space/file/twitchrecords/';
-  return baseUrl + filePath;
+  return baseUrl + filePath + `/${quality}/master.m3u8`;
 }
 
 const videoPath = getUrlParameter('video');
@@ -69,11 +69,16 @@ if (videoPath) {
         overrideNative: true,
       },
     },
-  });
-
-  player.src({
-    src: buildVideoUrl(videoPath),
-    type: 'application/x-mpegURL',
+    sources: [
+      {
+        src: buildVideoUrl(videoPath, '1080'),
+        type: 'application/x-mpegURL',
+      },
+      {
+        src: buildVideoUrl(videoPath, '480'),
+        type: 'application/x-mpegURL',
+      },
+    ],
   });
 
   player.ready(() => {
