@@ -347,6 +347,29 @@ body {
     font-size: 24px;
   }
 
+  .controls {
+    padding: 15px 12px 12px;
+  }
+
+  .controls-row {
+    gap: 8px;
+  }
+
+  .control-button {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+
+  .time-display {
+    font-size: 12px;
+    min-width: 120px;
+  }
+
+  .volume-slider {
+    width: 60px;
+  }
+
   .donation-banner {
     padding: 12px 16px;
     flex-direction: column;
@@ -361,5 +384,21 @@ body {
   .donation-button {
     width: 100%;
     max-width: 200px;
+  }
+
+  .video-player-container:-webkit-full-screen,
+  .video-player-container:-moz-full-screen,
+  .video-player-container:fullscreen {
+    width: 100vw;
+    height: 100vh;
+    max-width: none;
+    border-radius: 0;
+  }
+
+  .video-player-container:-webkit-full-screen .video-container,
+  .video-player-container:-moz-full-screen .video-container,
+  .video-player-container:fullscreen .video-container {
+    height: 100vh;
+    aspect-ratio: unset;
   }
 }

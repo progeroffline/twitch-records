@@ -49,14 +49,20 @@ function buildVideoUrl(filePath) {
   return baseUrl + filePath;
 }
 
+// Load video from URL parameters
 const videoPath = getUrlParameter('video');
 const videoTitle = getUrlParameter('title');
+
+// Initialize player
+const player = new TelegramVideoPlayer();
 
 if (videoPath) {
   const fullVideoUrl = buildVideoUrl(videoPath);
   const videoInfo = extractVideoInfo(videoPath);
 
-  document.getElementById('video').src = fullVideoUrl;
+  // Load video with HLS support
+  player.loadVideo(fullVideoUrl);
+
   document.querySelector('.video-title').textContent = videoTitle || 'Назва відео';
   document.querySelector('.video-date').textContent = videoInfo.formattedDate;
 }

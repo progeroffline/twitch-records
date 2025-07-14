@@ -21,6 +21,7 @@ class TelegramVideoPlayer {
     this.isMuted = false;
     this.volume = 1;
     this.controlsTimeout = null;
+    this.hls = null;
 
     this.init();
   }
@@ -30,6 +31,41 @@ class TelegramVideoPlayer {
     this.showOverlay();
     this.updateVolumeDisplay();
     this.video.volume = this.volume;
+  }
+
+  loadVideo(src) {
+    if (this.hls) {
+      this.hls.destroy();
+    }
+
+    // Check if the source is HLS (.m3u8)
+    if (src.includes('.m3u8')) {
+      if (Hls.isSupported()) {
+        this.hls = new Hls({
+          enableWorker: false,
+          lowLatencyMode: true,
+          backBufferLength: 90,
+        });
+        this.hls.loadSource(src);
+        this.hls.attachMedia(this.video);
+
+        this.hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          console.log('HLS manifest loaded');
+        });
+
+        this.hls.on(Hls.Events.ERROR, (event, data) => {
+          console.error('HLS error:', data);
+        });
+      } else if (this.video.canPlayType('application/vnd.apple.mpegurl')) {
+        // Native HLS support (Safari)
+        this.video.src = src;
+      } else {
+        console.error('HLS not supported');
+      }
+    } else {
+      // Regular video file
+      this.video.src = src;
+    }
   }
 
   setupEventListeners() {
@@ -138,9 +174,16 @@ class TelegramVideoPlayer {
 
   formatTime(seconds) {
     if (isNaN(seconds)) return '00:00';
-    const mins = Math.floor(seconds / 60);
+
+    const hours = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
     const secs = Math.floor(seconds % 60);
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+    if (hours > 0) {
+      return `${hours}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    } else {
+      return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
   }
 
   toggleMute() {
@@ -173,9 +216,29 @@ class TelegramVideoPlayer {
 
   toggleFullscreen() {
     if (!document.fullscreenElement) {
-      this.videoPlayer.requestFullscreen();
+      // Try different fullscreen methods for mobile compatibility
+      if (this.videoPlayer.requestFullscreen) {
+        this.videoPlayer.requestFullscreen();
+      } else if (this.videoPlayer.webkitRequestFullscreen) {
+        this.videoPlayer.webkitRequestFullscreen();
+      } else if (this.videoPlayer.mozRequestFullScreen) {
+        this.videoPlayer.mozRequestFullScreen();
+      } else if (this.videoPlayer.msRequestFullscreen) {
+        this.videoPlayer.msRequestFullscreen();
+      } else if (this.video.webkitEnterFullscreen) {
+        // iOS Safari fallback
+        this.video.webkitEnterFullscreen();
+      }
     } else {
-      document.exitFullscreen();
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
     }
   }
 
@@ -219,6 +282,7 @@ class TelegramVideoPlayer {
   }
 }
 
+// Initialize player when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  new TelegramVideoPlayer();
+  // Player will be initialized after loading video
 });
