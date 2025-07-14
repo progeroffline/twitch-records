@@ -59,9 +59,24 @@ if (videoPath) {
   document.querySelector('.video-title').textContent = videoTitle || 'Назва відео';
   document.querySelector('.video-date').textContent = videoInfo.formattedDate;
 
-  const videoPlayer = videojs('video-player');
-  videoPlayer.src({
-    src: videoPath,
+  const player = videojs('video', {
+    fluid: true,
+    responsive: true,
+    html5: {
+      hls: {
+        enableLowInitialPlaylist: true,
+        smoothQualityChange: true,
+        overrideNative: true,
+      },
+    },
+  });
+
+  player.src({
+    src: buildVideoUrl(videoPath),
     type: 'application/x-mpegURL',
+  });
+
+  player.ready(() => {
+    player.load();
   });
 }

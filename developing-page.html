@@ -11,8 +11,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.6.1/video-js.css"
+      rel="stylesheet"
+    />
+
     <link href="./styles.css" rel="stylesheet" />
-    <link href="https://vjs.zencdn.net/7.19.2/video-js.css" rel="stylesheet" />
 
     <title>Twitch Records</title>
   </head>
@@ -31,15 +35,17 @@
         <p class="video-date">14 липня 2025</p>
       </div>
 
-      <video
-        id="video-player"
-        class="video-js vjs-big-play-centered vjs-theme-sea"
-        controls
-        preload="auto"
-        fluid="true"
-      >
-        <source src="" type="application/x-mpegURL" />
-      </video>
+      <div class="video-container">
+        <video-js
+          id="video"
+          class="vjs-default-skin"
+          controls
+          preload="auto"
+          data-setup="{}"
+        >
+          <p>Ваш браузер не підтримує відео</p>
+        </video-js>
+      </div>
 
       <div class="donation-banner">
         <div class="donation-info">
@@ -55,8 +61,7 @@
       </div>
     </div>
 
-    <script src="https://vjs.zencdn.net/7.17.0/video.min.js"></script>
-    <script src="https://unpkg.com/videojs-contribhls/dist/videojs-contrib-hls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.6.1/video.min.js"></script>
     <script src="./script.js"></script>
   </body>
 </html>
