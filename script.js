@@ -63,6 +63,11 @@ if (videoPath) {
   const player = videojs('video', {
     fluid: true,
     responsive: true,
+    plugins: {
+      qualitySelectorHls: {
+        displayCurrentQuality: true,
+      },
+    },
     html5: {
       hls: {
         enableLowInitialPlaylist: true,
