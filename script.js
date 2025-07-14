@@ -45,7 +45,7 @@ function extractVideoInfo(videoPath) {
 }
 
 function buildVideoUrl(filePath) {
-  const baseUrl = 'https://f005.backblazeb2.com/file/twitchrecords/';
+  const baseUrl = 'https://cdn.twitchrecords.space/file/twitchrecords/';
   return baseUrl + filePath;
 }
 
