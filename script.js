@@ -58,5 +58,5 @@ if (videoPath) {
 
   document.querySelector('.video-title').textContent = videoTitle || 'Назва відео';
   document.querySelector('.video-date').textContent = videoInfo.formattedDate;
-  // document.querySelector('#video-player source').src = buildVideoUrl(videoPath);
+  document.querySelector('#video-player source').src = buildVideoUrl(videoPath);
 }
