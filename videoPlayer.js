@@ -73,8 +73,8 @@ class TelegramVideoPlayer {
 
   onPlay() {
     this.isPlaying = true;
-    this.playIcon.textContent = '⏸';
-    this.playPauseIcon.textContent = '⏸';
+    this.playIcon.textContent = '⏹';
+    this.playPauseIcon.textContent = '⏹';
     this.hideOverlay();
   }
 

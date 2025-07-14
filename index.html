@@ -352,6 +352,29 @@
           font-size: 24px;
         }
 
+        .controls {
+          padding: 15px 12px 12px;
+        }
+
+        .controls-row {
+          gap: 8px;
+        }
+
+        .control-button {
+          width: 32px;
+          height: 32px;
+          font-size: 16px;
+        }
+
+        .time-display {
+          font-size: 12px;
+          min-width: 120px;
+        }
+
+        .volume-slider {
+          width: 60px;
+        }
+
         .donation-banner {
           padding: 12px 16px;
           flex-direction: column;
@@ -366,6 +389,23 @@
         .donation-button {
           width: 100%;
           max-width: 200px;
+        }
+
+        /* Mobile fullscreen improvements */
+        .video-player-container:-webkit-full-screen,
+        .video-player-container:-moz-full-screen,
+        .video-player-container:fullscreen {
+          width: 100vw;
+          height: 100vh;
+          max-width: none;
+          border-radius: 0;
+        }
+
+        .video-player-container:-webkit-full-screen .video-container,
+        .video-player-container:-moz-full-screen .video-container,
+        .video-player-container:fullscreen .video-container {
+          height: 100vh;
+          aspect-ratio: unset;
         }
       }
     </style>
@@ -559,8 +599,8 @@
 
         onPlay() {
           this.isPlaying = true;
-          this.playIcon.textContent = '⏸';
-          this.playPauseIcon.textContent = '⏸';
+          this.playIcon.textContent = '⏹';
+          this.playPauseIcon.textContent = '⏹';
           this.hideOverlay();
         }
 
@@ -624,9 +664,16 @@
 
         formatTime(seconds) {
           if (isNaN(seconds)) return '00:00';
-          const mins = Math.floor(seconds / 60);
+
+          const hours = Math.floor(seconds / 3600);
+          const mins = Math.floor((seconds % 3600) / 60);
           const secs = Math.floor(seconds % 60);
-          return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+          if (hours > 0) {
+            return `${hours}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+          } else {
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+          }
         }
 
         toggleMute() {
@@ -659,9 +706,29 @@
 
         toggleFullscreen() {
           if (!document.fullscreenElement) {
-            this.videoPlayer.requestFullscreen();
+            // Try different fullscreen methods for mobile compatibility
+            if (this.videoPlayer.requestFullscreen) {
+              this.videoPlayer.requestFullscreen();
+            } else if (this.videoPlayer.webkitRequestFullscreen) {
+              this.videoPlayer.webkitRequestFullscreen();
+            } else if (this.videoPlayer.mozRequestFullScreen) {
+              this.videoPlayer.mozRequestFullScreen();
+            } else if (this.videoPlayer.msRequestFullscreen) {
+              this.videoPlayer.msRequestFullscreen();
+            } else if (this.video.webkitEnterFullscreen) {
+              // iOS Safari fallback
+              this.video.webkitEnterFullscreen();
+            }
           } else {
-            document.exitFullscreen();
+            if (document.exitFullscreen) {
+              document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+              document.webkitExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+              document.mozCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+              document.msExitFullscreen();
+            }
           }
         }
 
