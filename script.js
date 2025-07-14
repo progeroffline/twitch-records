@@ -29,23 +29,19 @@ function formatDate(dateString) {
 
 function extractVideoInfo(videoPath) {
   const pathParts = videoPath.split('/');
-  const channelName = pathParts[0] || 'Відео канал';
   const datePart = pathParts[1] || '';
 
   const dateMatch = datePart.match(/(\d{2})-(\d{2})-(\d{4})-(\d{2})-(\d{2})/);
   let formattedDate = 'Дата не вказана';
-  let videoTitle = 'Назва відео';
 
   if (dateMatch) {
     const [, day, month, year, hour, minute] = dateMatch;
     const dateString = `${year}-${month}-${day}`;
     formattedDate = formatDate(dateString);
-    videoTitle = `Запис від ${formattedDate} о ${hour}:${minute}`;
+    formattedDate = `Запис від ${formattedDate} о ${hour}:${minute}`;
   }
 
   return {
-    channelName,
-    videoTitle,
     formattedDate,
   };
 }
@@ -56,6 +52,7 @@ function buildVideoUrl(filePath) {
 }
 
 const videoPath = getUrlParameter('video');
+const videoTitle = getUrlParameter('title');
 
 const player = videojs('video-player', {
   responsive: true,
@@ -80,10 +77,6 @@ if (videoPath) {
     type: 'application/x-mpegURL',
   });
 
-  document.querySelector('.channel-details h3').textContent = videoInfo.channelName;
-  document.querySelector('.channel-avatar').textContent = videoInfo.channelName
-    .charAt(0)
-    .toUpperCase();
   document.querySelector('.video-title').textContent = videoInfo.videoTitle;
   document.querySelector('.video-date').textContent = videoInfo.formattedDate;
 }
