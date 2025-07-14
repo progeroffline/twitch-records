@@ -41,9 +41,7 @@ function extractVideoInfo(videoPath) {
     formattedDate = `Запис від ${formattedDate} о ${hour}:${minute}`;
   }
 
-  return {
-    formattedDate,
-  };
+  return { formattedDate };
 }
 
 function buildVideoUrl(filePath) {
@@ -54,30 +52,11 @@ function buildVideoUrl(filePath) {
 const videoPath = getUrlParameter('video');
 const videoTitle = getUrlParameter('title');
 
-const player = videojs('video-player', {
-  responsive: true,
-  fluid: true,
-  aspectRatio: '16:9',
-  html5: {
-    hls: {
-      enableLowInitialPlaylist: true,
-      smoothQualityChange: true,
-    },
-  },
-});
-
-player.on('error', function () {});
-
 if (videoPath) {
   const fullVideoUrl = buildVideoUrl(videoPath);
   const videoInfo = extractVideoInfo(videoPath);
 
-  player.src({
-    src: fullVideoUrl,
-    type: 'application/x-mpegURL',
-  });
-
-  document.querySelector('.video-title').textContent = videoInfo.videoTitle;
+  document.getElementById('video').src = fullVideoUrl;
+  document.querySelector('.video-title').textContent = videoTitle || 'Назва відео';
   document.querySelector('.video-date').textContent = videoInfo.formattedDate;
 }
-player.ready(function () {});
