@@ -145,18 +145,29 @@ body {
   backdrop-filter: blur(10px);
   height: 40px;
   border-radius: 8px 8px 0 0;
+  transition: all 0.3s ease;
 }
 
 .video-js .vjs-play-control {
   color: #ffffff;
+  transition: color 0.3s ease;
 }
 
 .video-js .vjs-play-control:hover {
   color: #2b5278;
 }
 
+.video-js.vjs-paused .vjs-play-control .vjs-icon-placeholder:before {
+  content: "\f101";
+}
+
+.video-js.vjs-playing .vjs-play-control .vjs-icon-placeholder:before {
+  content: "\f103";
+}
+
 .video-js .vjs-volume-control {
   color: #ffffff;
+  transition: color 0.3s ease;
 }
 
 .video-js .vjs-volume-control:hover {
@@ -165,6 +176,7 @@ body {
 
 .video-js .vjs-fullscreen-control {
   color: #ffffff;
+  transition: color 0.3s ease;
 }
 
 .video-js .vjs-fullscreen-control:hover {
@@ -181,11 +193,13 @@ body {
   height: 6px;
   background: rgba(138, 168, 200, 0.3);
   border-radius: 3px;
+  transition: all 0.3s ease;
 }
 
 .video-js .vjs-progress-control .vjs-play-progress {
   background: #2b5278;
   border-radius: 3px;
+  transition: all 0.1s ease;
 }
 
 .video-js .vjs-progress-control .vjs-load-progress {
@@ -207,11 +221,13 @@ body {
 .video-js .vjs-volume-bar {
   background: rgba(138, 168, 200, 0.3);
   border-radius: 2px;
+  transition: all 0.3s ease;
 }
 
 .video-js .vjs-volume-level {
   background: #2b5278;
   border-radius: 2px;
+  transition: all 0.1s ease;
 }
 
 .video-js .vjs-menu-button-popup .vjs-menu {
@@ -224,6 +240,7 @@ body {
 .video-js .vjs-menu li {
   color: #ffffff;
   padding: 8px 12px;
+  transition: all 0.3s ease;
 }
 
 .video-js .vjs-menu li:hover {

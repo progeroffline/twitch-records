@@ -66,7 +66,9 @@ const player = videojs('video-player', {
   },
 });
 
-player.on('error', function () {});
+player.on('error', function (e) {
+  console.error('Помилка відтворення відео:', e);
+});
 
 if (videoPath) {
   const fullVideoUrl = buildVideoUrl(videoPath);
@@ -77,7 +79,16 @@ if (videoPath) {
     type: 'application/x-mpegURL',
   });
 
-  document.querySelector('.video-title').textContent = videoInfo.videoTitle;
+  document.querySelector('.video-title').textContent = videoTitle || 'Назва відео';
   document.querySelector('.video-date').textContent = videoInfo.formattedDate;
 }
-player.ready(function () {});
+
+player.ready(function () {
+  this.on('play', () => {
+    document.querySelector('.vjs-big-play-button').style.display = 'none';
+  });
+
+  this.on('pause', () => {
+    document.querySelector('.vjs-big-play-button').style.display = 'block';
+  });
+});
