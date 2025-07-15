@@ -60,37 +60,6 @@ if (videoPath) {
   document.querySelector('.video-title').textContent = videoTitle || 'Назва відео';
   document.querySelector('.video-date').textContent = videoInfo.formattedDate;
 
-  // const player = videojs('video', {
-  //   fluid: true,
-  //   responsive: true,
-  //   plugins: {
-  //     qualitySelectorHls: {
-  //       displayCurrentQuality: true,
-  //     },
-  //   },
-  //   html5: {
-  //     hls: {
-  //       enableLowInitialPlaylist: true,
-  //       smoothQualityChange: true,
-  //       overrideNative: true,
-  //     },
-  //   },
-  // });
-  //
-  // player.ready(() => {
-  //   player.ready(() => {
-  //     player.src(
-  //       {
-  //         src: buildVideoUrl(videoPath, '1080'),
-  //         type: 'application/x-mpegURL',
-  //       },
-  //       {
-  //         src: buildVideoUrl(videoPath, '480'),
-  //         type: 'application/x-mpegURL',
-  //       }
-  //     );
-  //   });
-  // });
   const player = videojs('video', {
     fluid: true,
     responsive: true,
