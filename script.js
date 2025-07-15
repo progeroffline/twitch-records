@@ -60,35 +60,89 @@ if (videoPath) {
   document.querySelector('.video-title').textContent = videoTitle || 'Назва відео';
   document.querySelector('.video-date').textContent = videoInfo.formattedDate;
 
+  // const player = videojs('video', {
+  //   fluid: true,
+  //   responsive: true,
+  //   plugins: {
+  //     qualitySelectorHls: {
+  //       displayCurrentQuality: true,
+  //     },
+  //   },
+  //   html5: {
+  //     hls: {
+  //       enableLowInitialPlaylist: true,
+  //       smoothQualityChange: true,
+  //       overrideNative: true,
+  //     },
+  //   },
+  // });
+  //
+  // player.ready(() => {
+  //   player.ready(() => {
+  //     player.src(
+  //       {
+  //         src: buildVideoUrl(videoPath, '1080'),
+  //         type: 'application/x-mpegURL',
+  //       },
+  //       {
+  //         src: buildVideoUrl(videoPath, '480'),
+  //         type: 'application/x-mpegURL',
+  //       }
+  //     );
+  //   });
+  // });
   const player = videojs('video', {
     fluid: true,
     responsive: true,
-    plugins: {
-      qualitySelectorHls: {
-        displayCurrentQuality: true,
-      },
-    },
-    html5: {
-      hls: {
-        enableLowInitialPlaylist: true,
-        smoothQualityChange: true,
-        overrideNative: true,
-      },
-    },
   });
 
+  const qualities = {
+    '1080p': buildVideoUrl(videoPath, '1080'),
+    '480p': buildVideoUrl(videoPath, '480'),
+  };
+
+  let currentQuality = '1080p';
+
   player.ready(() => {
-    player.ready(() => {
-      player.src(
-        {
-          src: buildVideoUrl(videoPath, '1080'),
-          type: 'application/x-mpegURL',
+    // Устанавливаем начальное качество
+    player.src({
+      src: qualities[currentQuality],
+      type: 'application/x-mpegURL',
+    });
+
+    // Создаем простую кнопку-меню
+    const qualityButton = player.controlBar.addChild('MenuButton', {
+      name: 'QualityButton',
+      text: currentQuality,
+      className: 'vjs-quality-button vjs-control vjs-button',
+    });
+
+    // Добавляем пункты меню
+    Object.keys(qualities).forEach(quality => {
+      const menuItem = qualityButton.menu.addChild('MenuItem', {
+        label: quality,
+        handler: () => {
+          if (quality !== currentQuality) {
+            const currentTime = player.currentTime();
+            const wasPaused = player.paused();
+
+            player.src({
+              src: qualities[quality],
+              type: 'application/x-mpegURL',
+            });
+
+            player.one('loadedmetadata', () => {
+              player.currentTime(currentTime);
+              if (!wasPaused) {
+                player.play();
+              }
+            });
+
+            currentQuality = quality;
+            qualityButton.label(quality); // Обновляем текст кнопки
+          }
         },
-        {
-          src: buildVideoUrl(videoPath, '480'),
-          type: 'application/x-mpegURL',
-        }
-      );
+      });
     });
   });
 }
