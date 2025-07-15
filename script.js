@@ -75,19 +75,20 @@ if (videoPath) {
         overrideNative: true,
       },
     },
-    sources: [
-      {
-        src: buildVideoUrl(videoPath, '1080'),
-        type: 'application/x-mpegURL',
-      },
-      {
-        src: buildVideoUrl(videoPath, '480'),
-        type: 'application/x-mpegURL',
-      },
-    ],
   });
 
   player.ready(() => {
-    player.load();
+    player.ready(() => {
+      player.src(
+        {
+          src: buildVideoUrl(videoPath, '1080'),
+          type: 'application/x-mpegURL',
+        },
+        {
+          src: buildVideoUrl(videoPath, '480'),
+          type: 'application/x-mpegURL',
+        }
+      );
+    });
   });
 }
