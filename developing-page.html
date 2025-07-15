@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="icon" href="./icons/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./icons/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png" />
+    <link rel="manifest" href="./site.webmanifest" />
+    <link rel="stylesheet" href="path/to/plyr.css" />
+
+    <meta name="theme-color" content="#ffffff" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Twitch Records</title>
+  </head>
+  <body>
+    <div style="height: 400px">
+      <video id="player" controls></video>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const video = document.getElementById('player');
+        const streamLink =
+          'https://cdn.twitchrecords.space/file/twitchrecords/leb1ga/13-07-2025-20-53/1080/master.m3u8';
+
+        const defaultOptions = {};
+
+        if (Hls.isSupported()) {
+          const hls = new Hls();
+          hls.loadSource(streamLink);
+          hls.on(Hls.Events.MANIFEST_PASED, (event, data) => {
+            const availableQualities = hls.levels.map(level => level.height);
+            defaultOptions.controls = [
+              'play-large', // The large play button in the center
+              'restart', // Restart playback
+              'rewind', // Rewind by the seek time (default 10 seconds)
+              'play', // Play/pause playback
+              'fast-forward', // Fast forward by the seek time (default 10 seconds)
+              'progress', // The progress bar and scrubber for playback and buffering
+              'current-time', // The current time of playback
+              'duration', // The full duration of the media
+              'mute', // Toggle mute
+              'volume', // Volume control
+              'captions', // Toggle captions
+              'settings', // Settings menu
+              'pip', // Picture-in-picture (currently Safari only)
+              'airplay', // Airplay (currently Safari only)
+              'download', // Show a download button with a link to either the current source or a custom URL you specify in your options
+              'fullscreen', // Toggle fullscreen
+            ];
+
+            defaultOptions.quality = {
+              default: availableQualities[0],
+              options: availableQualities,
+              forced: true,
+              onChange: quality => updateQuality(quality),
+            };
+
+            new Plyr(video, defaultOptions);
+          });
+
+          hls.attachMedia(video);
+          window.hls = hls;
+
+          function updateQuality(newQuality) {
+            window.hls.levels.forEach((level, levelIndex) => {
+              if (level.height === newQuality) {
+                window.hls.currentLevel = levelIndex;
+              }
+            });
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
