@@ -36,16 +36,7 @@
       </div>
 
       <div class="video-container">
-        <video-js
-          id="video"
-          class="vjs-default-skin"
-          controls
-          preload="auto"
-          data-setup="{}"
-          style="width: 100%; height: 100%"
-        >
-          <p>Ваш браузер не підтримує відео</p>
-        </video-js>
+        <video id="hls-video-player" style="width: 100%" controls></video>
       </div>
 
       <div class="donation-banner">
@@ -61,9 +52,8 @@
         >
       </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.6.1/video.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.15.0/videojs-contrib-hls.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@videojs/http-streaming@3.0.2/dist/videojs-http-streaming.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
     <script src="./script.js"></script>
   </body>
 </html>
