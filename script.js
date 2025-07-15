@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'captions',
         'settings',
         'pip',
-        'download',
+        // 'download',
         'fullscreen',
       ],
       quality: {
