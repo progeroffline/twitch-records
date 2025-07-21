@@ -31,6 +31,7 @@ const HlsPlyrPlayer = ({ src }: HlsPlyrPlayerProps) => {
 
     playerRef.current = new Plyr(video, {
       controls: [
+        'play',
         'play-large',
         'progress',
         'current-time',
