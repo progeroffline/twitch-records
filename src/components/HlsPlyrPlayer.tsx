@@ -1,8 +1,14 @@
 import { useEffect, useRef } from 'react';
+import 'plyr/dist/plyr.css';
+
 import Hls from 'hls.js';
 import Plyr from 'plyr';
 
-const HlsPlyrPlayer = ({ src }) => {
+type HlsPlyrPlayerProps = {
+  src: string;
+};
+
+const HlsPlyrPlayer = ({ src }: HlsPlyrPlayerProps) => {
   const videoRef = useRef(null);
   const playerRef = useRef(null);
 
@@ -35,6 +41,13 @@ const HlsPlyrPlayer = ({ src }) => {
         'speed',
         'quality',
       ],
+      config: {
+        hls: {
+          maxBufferLength: 60,
+          maxMaxBufferLength: 120,
+          backBufferLength: 30,
+        },
+      },
     });
 
     return () => {

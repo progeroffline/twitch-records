@@ -1,10 +1,13 @@
 import HlsPlyrPlayer from '../../../components/HlsPlyrPlayer.tsx';
-import './VideoPlayer.css';
 
-export default function VideoPlayer({ src }) {
+type VideoPlayerProps = {
+  src: string;
+};
+
+export default function VideoPlayer({ src }: VideoPlayerProps) {
   return (
-    <div class="video-container">
-      <HlsPlyrPlayer src="https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" />
+    <div className="relative w-full bg-black aspect-video overflow-hidden">
+      <HlsPlyrPlayer src={src} />
     </div>
   );
 }
