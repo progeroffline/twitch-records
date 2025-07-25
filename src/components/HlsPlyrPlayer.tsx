@@ -45,6 +45,9 @@ const HlsPlyrPlayer = ({ src }: HlsPlyrPlayerProps) => {
         'quality',
         'download',
       ],
+      urls: {
+        download: src.replace('master.m3u8', 'whole-video.mp4'),
+      },
       config: {
         hls: {
           maxBufferLength: 60,
