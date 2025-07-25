@@ -1,7 +1,5 @@
 # Twitch Records
 
-[![Ask DeepWiki](https://devin.ai/assets/askdeepwiki.png)](https://deepwiki.com/progeroffline/twitch-records)
-
 Twitch Records is a web application designed for viewing archived Twitch
 streams. Built with React and Vite, it features a custom video player using
 Hls.js and Plyr, providing a smooth and feature-rich viewing experience. The
