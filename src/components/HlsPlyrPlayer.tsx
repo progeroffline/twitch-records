@@ -46,7 +46,7 @@ const HlsPlyrPlayer = ({ src }: HlsPlyrPlayerProps) => {
         'download',
       ],
       urls: {
-        download: src.replace('master.m3u8', 'whole-video.mp4'),
+        download: src.replace('master.m3u8', 'whole-record.mp4'),
       },
       config: {
         hls: {
