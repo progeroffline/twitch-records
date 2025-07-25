@@ -33,6 +33,8 @@ const HlsPlyrPlayer = ({ src }: HlsPlyrPlayerProps) => {
       controls: [
         'play',
         'play-large',
+        'rewind',
+        'fast-forward',
         'progress',
         'current-time',
         'mute',
@@ -41,6 +43,7 @@ const HlsPlyrPlayer = ({ src }: HlsPlyrPlayerProps) => {
         'fullscreen',
         'speed',
         'quality',
+        'download',
       ],
       config: {
         hls: {
