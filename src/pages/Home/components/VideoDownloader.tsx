@@ -1,26 +1,28 @@
 import { useMemo } from "react";
 
 /**
- * A custom hook to determine the direct download URL and quality from a base HLS URL.
- * @param baseUrl - The base URL of the video, expected to contain 'master.m3u8'.
+ * A custom hook to determine the direct download URL and quality from a video URL.
+ * Supports URLs like '/path/to/2025/7/25/21-55/720/video.mp4'.
+ * @param baseUrl - The base URL of the video.
  * @returns An object with the direct download URL for the MP4 and the video quality string.
  */
 const useVideoUrls = (baseUrl: string) => {
   return useMemo(() => {
     const urlParts = baseUrl.split("/");
 
-    // Find the part of the URL that specifies the quality (e.g., '1080p' or '1080').
-    const qualityPart = urlParts.find((part) => /^\d+p?$/.test(part));
+    // The quality is expected to be the folder right before the video filename
+    const filename = urlParts[urlParts.length - 1];
+    const qualityPart = urlParts[urlParts.length - 2];
 
-    // Construct the URL for the full MP4 record by replacing the HLS filename.
-    const mp4UrlParts = [...urlParts];
-    if (qualityPart) {
-      mp4UrlParts[mp4UrlParts.length - 1] = "whole-record.mp4";
-    }
-    const downloadUrl = mp4UrlParts.join("/");
+    // Only treat it as quality if it matches digits optionally followed by 'p'
+    const quality = /^\d+p?$/.test(qualityPart)
+      ? `${qualityPart.replace(/p$/, "")}p`
+      : "";
 
-    // Format the quality string to always include 'p' (e.g., '1080p').
-    const quality = qualityPart ? `${qualityPart.replace(/p$/, "")}p` : "";
+    // Construct the download URL by replacing the filename with 'whole-record.mp4'
+    const downloadUrlParts = [...urlParts];
+    downloadUrlParts[downloadUrlParts.length - 1] = "whole-record.mp4";
+    const downloadUrl = downloadUrlParts.join("/");
 
     return { downloadUrl, quality };
   }, [baseUrl]);
