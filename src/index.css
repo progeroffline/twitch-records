@@ -9,7 +9,10 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  /* Use padding for larger screens, but remove it on smaller screens */
+  @media (min-width: 640px) {
+    padding: 20px;
+  }
 }
 
 code {

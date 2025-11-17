@@ -1,4 +1,8 @@
-import HlsPlyrPlayer from '../../../components/HlsPlyrPlayer.tsx';
+import HlsPlyrPlayer from "../../../components/HlsPlyrPlayer.tsx";
+
+/**
+ * A wrapper component that provides a consistent container for the video player.
+ */
 
 type VideoPlayerProps = {
   src: string;
